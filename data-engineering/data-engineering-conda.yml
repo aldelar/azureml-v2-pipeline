@@ -1,0 +1,9 @@
+name: amlv2-p-data-engineering
+channels:
+- conda-forge
+dependencies:
+- pip
+- python=3.8
+- pip:
+  - azureml-core==1.43.0
+  - pandas

@@ -1,0 +1,38 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+display_name: amlv2_pipeline
+compute: azureml:cpu-cluster
+
+jobs:
+
+  data_engineering:
+    type: command
+    code: data-engineering
+    command: python data-engineering.py --raw_data_file ${{inputs.raw_data_file}} --training_data_folder ${{outputs.training_data_folder}}
+    inputs:
+      raw_data_file:
+        type: uri_file
+        mode: ro_mount
+        path: azureml://datastores/datalake/paths/amlv2_pipeline_raw_data/raw_data.csv
+    outputs:
+      training_data_folder:
+        type: uri_folder
+        mode: rw_mount
+        path: azureml://datastores/datalake/paths/amlv2_pipeline_training_data
+    environment: azureml:amlv2-p-data-engineering@latest
+
+  training:
+    type: command
+    code: training
+    command: python training.py --training_data_folder ${{inputs.training_data_folder}} --predictions_data_folder ${{outputs.predictions_data_folder}}
+    inputs:
+      training_data_folder:
+        type: uri_folder
+        mode: ro_mount
+        path: ${{parent.jobs.data_engineering.outputs.training_data_folder}}
+    outputs:
+      predictions_data_folder:
+        type: uri_folder
+        mode: rw_mount
+        path: azureml://datastores/datalake/paths/amlv2_pipeline_prediction_data
+    environment: azureml:amlv2-p-training@latest

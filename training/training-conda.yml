@@ -1,0 +1,11 @@
+name: amlv2-p-training
+channels:
+- conda-forge
+dependencies:
+- pip
+- python=3.8
+- pip:
+  - azureml-core==1.43.0
+  - azureml-dataprep==4.2.2
+  - mlflow
+  - pandas
