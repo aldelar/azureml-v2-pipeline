@@ -1,7 +1,9 @@
 $schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
 type: pipeline
 display_name: amlv2_pipeline
-compute: azureml:cpu-cluster
+
+settings:
+  force_rerun: true
 
 jobs:
 
@@ -20,6 +22,7 @@ jobs:
         mode: rw_mount
         path: azureml://datastores/datalake/paths/amlv2_pipeline_training_data
     environment: azureml:amlv2-p-data-engineering@latest
+    compute: azureml:cpu-cluster
 
   training:
     type: command
@@ -36,3 +39,4 @@ jobs:
         mode: rw_mount
         path: azureml://datastores/datalake/paths/amlv2_pipeline_prediction_data
     environment: azureml:amlv2-p-training@latest
+    compute: azureml:cpu-cluster
