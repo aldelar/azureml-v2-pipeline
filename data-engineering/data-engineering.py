@@ -20,6 +20,3 @@ def parse_args():
     return args
 
 # main
-if __name__ == "__main__":
-    args = parse_args()
-    prepare_training_data(args)

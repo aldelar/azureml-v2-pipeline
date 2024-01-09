@@ -5,7 +5,7 @@
 This is an Azure ML CLIv2 template project demonstrating a very simple pipeline with inputs/outputs connected to a datalake.
 
 We here have a simple pipeline with 2 steps:
-- data-engineering, grabs data from a raw_data.csv file (this needs to be setup in your Azure ML environment, in a storage account container (recommending DataLake Gen2)), and defined as a datastore in AML (datastore named 'datalake' here in this example)
+- data-engineering, grabs data from a raw_data.csv file (this needs to be setup in your Azure ML environment, in a storage account container (recommending DataLake Gen2)), and defined as a datastore in AML (datastore named 'workspaceblobstore' here in this example, which is created by default in your AML workspace)
 - training: sources data from the output of the data-engineering step, would in real life train a model, then perform predictions, and save these predictions to an output folder in the datalake
 
 ![pipeline](doc/pipeline.png)
@@ -16,7 +16,7 @@ outputs:
       predictions_data_folder:
         type: uri_folder
         mode: rw_mount
-        path: azureml://datastores/datalake/paths/aml_v2_pj_prediction_data
+        path: azureml://datastores/workspaceblobstore/paths/aml_v2_pj_prediction_data
 ```
 
 ## how to run/develop the python code locally
@@ -60,7 +60,6 @@ Once you've developed and tested your code locally, you can easily package it to
 
 ```
 az ml environment create -f ./data-engineering/data-engineering-environment.yml
-
 az ml environment create -f ./training/training-environment.yml
 ```
 To trigger a pipeline creation/run, run the following (note the flag to turn on the parallel job private preview feature if it isn't in public preview when you run this):
