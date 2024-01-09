@@ -16,7 +16,7 @@ outputs:
       predictions_data_folder:
         type: uri_folder
         mode: rw_mount
-        path: azureml://datastores/workspaceblobstore/paths/aml_v2_pj_prediction_data
+        path: azureml://datastores/workspaceblobstore/paths/datalake/aml_v2_pj_prediction_data
 ```
 
 ## how to run/develop the python code locally
@@ -31,7 +31,6 @@ Drop your training data into amlv2_pipeline_raw_data as 'raw_data.csv' (or any o
 Setup your local environment:
 ```
 conda env create -f data-engineering/data-engineering-conda.yml
-
 conda activate amlv2-p-data-engineering
 ```
 Develop your code as needed, and run it locally using this command:
@@ -43,7 +42,6 @@ python data-engineering/data-engineering.py --raw_data_file datalake/amlv2_pipel
 Same comments as above, setup your training environment like this:
 ```
 conda env create -f training/training-conda.yml
-
 conda activate amlv2-p-training
 ```
 Develop your code and test its execution as needed locally:

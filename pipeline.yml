@@ -16,12 +16,12 @@ jobs:
       raw_data_file:
         type: uri_file
         mode: ro_mount
-        path: azureml://datastores/workspaceblobstore/paths/amlv2_pipeline_raw_data/raw_data.csv
+        path: azureml://datastores/workspaceblobstore/paths/datalake/amlv2_pipeline_raw_data/raw_data.csv
     outputs:
       training_data_folder:
         type: uri_folder
         mode: rw_mount
-        path: azureml://datastores/workspaceblobstore/paths/amlv2_pipeline_training_data
+        path: azureml://datastores/workspaceblobstore/paths/datalake/amlv2_pipeline_training_data
     environment: azureml:amlv2-p-data-engineering@latest
     compute: serverless
     resources:
@@ -41,7 +41,7 @@ jobs:
       predictions_data_folder:
         type: uri_folder
         mode: rw_mount
-        path: azureml://datastores/workspaceblobstore/paths/amlv2_pipeline_prediction_data
+        path: azureml://datastores/workspaceblobstore/paths/datalake/amlv2_pipeline_prediction_data
     environment: azureml:amlv2-p-training@latest
     compute: serverless
     resources:
